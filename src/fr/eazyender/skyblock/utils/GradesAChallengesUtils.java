@@ -9,9 +9,10 @@ public class GradesAChallengesUtils {
 	 
 	 public static void initClass() {
 		 
-		 if(gradesIdToStr.equals(null)) {
 			 
 			 gradesIdToStr.put(-1, "§r§c[§r" + "§4§lAdministrateur" + "§r§c]§r");
+			 
+			 gradesIdToStr.put(0, "");
 			 
 			 gradesIdToStr.put(1, "§r§f[§r" + "§aVoyageur" + "§r§f]§r");
 			 gradesIdToStr.put(2, "§r§f[§r" + "§a§lNovice" + "§r§f]§r");
@@ -31,8 +32,7 @@ public class GradesAChallengesUtils {
 			 gradesIdToStr.put(15, "§r§f[§r" + "§7Aventurier§r§f-" + "§dOS" + "§r§f]§r");
 			 gradesIdToStr.put(16, "§r§f[§r" + "§7Aventurier§r§f-" + "§5OR" + "§r§f]§r");
 			 gradesIdToStr.put(17, "§r§f[§r" + "§7Aventurier§r§f-" + "§4§lAM" + "§r§f]§r");
-			 
-		 }
+			
 		 
 	 }
 

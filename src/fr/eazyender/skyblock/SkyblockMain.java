@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.eazyender.skyblock.commands.CommandAno;
 import fr.eazyender.skyblock.commands.CommandCHelp;
 import fr.eazyender.skyblock.commands.CommandCustomGive;
+import fr.eazyender.skyblock.commands.CommandGrades;
 import fr.eazyender.skyblock.commands.CommandHdv;
 import fr.eazyender.skyblock.commands.CommandHologrammes;
 import fr.eazyender.skyblock.commands.CommandIsland;
@@ -98,6 +99,8 @@ public class SkyblockMain extends JavaPlugin
 		getCommand("biome").setExecutor(new CommandeBiomes());
 		/* Commande pour se give les items customs */
 		getCommand("customgive").setExecutor(new CommandCustomGive());
+		/* Commande pour se give les grades */
+		getCommand("grades").setExecutor(new CommandGrades());
 		
 		getCommand("invite").setExecutor(new CommandTempoInvite());
 		

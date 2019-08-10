@@ -68,6 +68,7 @@ commands:
   grades:
     description: Commande pour se mettre les grades.
     permission: skyblock.admin
+    aliases: grade
   challenges:
     description: Commande pour afficher les challenges.
     permission: skyblock.player

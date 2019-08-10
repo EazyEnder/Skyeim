@@ -1,0 +1,74 @@
+name: Skyeim
+version: 1.0
+author: EazyEnder
+main : fr.eazyender.skyblock.SkyblockMain
+commands:
+  island:
+    description: Commande principal du serveur vous permettant d'avoir le controle sur votre ile.
+    permission: skyblock.player
+    aliases: is
+  annonce:
+    description: Commande permettant aux admins de faire une annonce.
+    permission: annonce.use
+    aliases: ano
+  structure:
+    description: Commande permettant aux admins de save et utiliser des structures.
+    permission: structure.use
+    aliases: struct
+  spawn:
+    description: Commande pour aller au spawn.
+    permission: skyblock.player
+    aliases: sp
+  shop:
+    description: Commande pour afficher la boutique.
+    permission: skyblock.player
+    aliases: boutique
+  trade:
+    description: Commande pour trade avec un joueur.
+    permission: trade.use
+    aliases: echange
+  money:
+    description: Commande pour l'argent.
+    permission: skyblock.player
+  holo:
+    description: Commande pour les hologrammes.
+    permission: holo.use
+  minions:
+    description: Commande pour les minions.
+    permission: minions.use
+  level:
+    description: Commande pour actualiser le level de son ile.
+    permission: skyblock.player
+    aliases: lvl
+  aide:
+    description: Commande pour afficher toutes les commandes.
+    permission: skyblock.player
+  hdv:
+    description: Commande pour afficher l'HDV.
+    permission: admin.use
+  don:
+    description: Commande pour afficher de l'argent.
+    permission: skyblock.player
+  tpa:
+    description: Commande pour afficher de l'argent.
+    permission: skyblock.player
+  invite:
+    description: Commande pour inviter un joueur.
+    permission: skyblock.player
+  canal:
+    description: Commande pour envoyer un message dans un canal special.
+    permission: skyblock.player
+    aliases: channel
+  biome:
+    description: Commande pour changer le biome d'un chunk.
+    permission: skyblock.player
+  customgive:
+    description: Commande pour se give les items customs.
+    permission: skyblock.admin
+  grades:
+    description: Commande pour se mettre les grades.
+    permission: skyblock.admin
+  challenges:
+    description: Commande pour afficher les challenges.
+    permission: skyblock.player
+    aliases: chl

@@ -9,8 +9,9 @@ public class GradesAChallengesUtils {
 	 
 	 public static void initClass() {
 		 
-			 
-			 gradesIdToStr.put(-1, "§r§c[§r" + "§4§lAdministrateur" + "§r§c]§r");
+		 	 gradesIdToStr.put(-3, "§r§c[§r" + "§3§lModo" + "§r§c]§r");
+		 	 gradesIdToStr.put(-2, "§r§c[§r" + "§6§lContributeur" + "§r§c]§r");
+			 gradesIdToStr.put(-1, "§r§c[§r" + "§4§lAdmin" + "§r§c]§r");
 			 
 			 gradesIdToStr.put(0, "");
 			 

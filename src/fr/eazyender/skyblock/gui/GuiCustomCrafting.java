@@ -78,6 +78,7 @@ public class GuiCustomCrafting implements Listener{
 			createCraftDiscoverEssence(inv,current,p);
 			createCraftGemEmplacement(inv,current,p);
 			createCraftFireGem(inv,current,p);
+			createCraftRubisSword(inv,current,p);
 			
 			if(event.isShiftClick()) {
 				event.setCancelled(true);
@@ -317,6 +318,35 @@ public class GuiCustomCrafting implements Listener{
 				
 			p.playSound(p.getLocation(), Sound.BLOCK_LAVA_POP, 1, 1);
 			inv.setItem(16,createCustomItem("§e§lEpee en §6§lAstate","Arme","§f§lGemme :§r§8Aucune",Material.DIAMOND_SWORD,1));
+			
+			for(int i = 0; i < tab_mixte.length;i++)
+				if(inv.getItem(tab_mixte[i]) != null) {
+				if(inv.getItem(tab_mixte[i]).getAmount() > 1) {int newA = inv.getItem(tab_mixte[i]).getAmount() - 1;inv.getItem(tab_mixte[i]).setAmount(newA);}
+				else {inv.clear(tab_mixte[i]);}
+				}
+			}
+			
+		}
+		
+	}
+	
+	private static void createCraftRubisSword(Inventory inv,ItemStack current,Player p) {
+		
+		int[] tab_rubis = {3,12};
+		int[] tab_stick = {21};
+		if(ifItemIsPresent(tab_rubis,createCustomItem("§c§lRubis","Ressource","§f§lRessource précieuse",Material.STICK,1),inv)
+			&& ifItemIsPresent(tab_stick,new ItemStack(Material.STICK),inv)) {
+			
+			
+			if(current.equals(actualize)) {
+				int[] tab_mixte = {2,4,11,13,20,22,3,21,12};
+			
+				Location loc = crafting_table.getLocation();
+				Location loc2 = new Location(loc.getWorld(),loc.getX(),loc.getY() + 2,loc.getZ());
+				loc.getWorld().spawnParticle(Particle.REDSTONE,loc2,1,new Particle.DustOptions(Color.fromBGR(187, 239, 230), 1));
+				
+			p.playSound(p.getLocation(), Sound.BLOCK_LAVA_POP, 1, 1);
+			inv.setItem(16,createCustomItem("§e§lEpee en §c§lRubis","Arme","§f§lGemme :§r§8Impossible",Material.DIAMOND_SWORD,1));
 			
 			for(int i = 0; i < tab_mixte.length;i++)
 				if(inv.getItem(tab_mixte[i]) != null) {

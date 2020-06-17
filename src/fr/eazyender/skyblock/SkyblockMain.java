@@ -1,16 +1,23 @@
 package fr.eazyender.skyblock;
 
+import java.lang.reflect.Field;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import fr.eazyender.skyblock.commands.CommandAno;
 import fr.eazyender.skyblock.commands.CommandCHelp;
+import fr.eazyender.skyblock.commands.CommandChallenges;
 import fr.eazyender.skyblock.commands.CommandCustomGive;
 import fr.eazyender.skyblock.commands.CommandGrades;
 import fr.eazyender.skyblock.commands.CommandHdv;
@@ -28,6 +35,7 @@ import fr.eazyender.skyblock.commands.CommandeBiomes;
 import fr.eazyender.skyblock.commands.CommandeChatCanals;
 import fr.eazyender.skyblock.commands.CommandeDonate;
 import fr.eazyender.skyblock.commands.CommandeTpa;
+import fr.eazyender.skyblock.event.BlockPlacedNaturaly;
 import fr.eazyender.skyblock.event.EntityInteract;
 import fr.eazyender.skyblock.event.PlayerBreakBlock;
 import fr.eazyender.skyblock.event.PlayerInteract;
@@ -37,22 +45,25 @@ import fr.eazyender.skyblock.event.PlayerPerformCommand;
 import fr.eazyender.skyblock.event.PlayerQuit;
 import fr.eazyender.skyblock.event.PlayerRespawn;
 import fr.eazyender.skyblock.gui.GuiBiome;
+import fr.eazyender.skyblock.gui.GuiChallengesMain;
 import fr.eazyender.skyblock.gui.GuiCustomCrafting;
 import fr.eazyender.skyblock.gui.GuiIsland;
 import fr.eazyender.skyblock.gui.GuiMinions;
 import fr.eazyender.skyblock.gui.GuiShop;
 import fr.eazyender.skyblock.gui.GuiTrade;
+import fr.eazyender.skyblock.gui.structure.GuiCustomFurnace;
 import fr.eazyender.skyblock.island.IslandManager;
 import fr.eazyender.skyblock.items.GemFire;
 import fr.eazyender.skyblock.player.CraftCustom;
 import fr.eazyender.skyblock.player.PlayerActionBar;
 import fr.eazyender.skyblock.player.PlayerEconomy;
 import fr.eazyender.skyblock.player.PlayerStats;
+import fr.eazyender.skyblock.structures.CustomFurnace;
+import fr.eazyender.skyblock.structures.ElementAltar;
 import fr.eazyender.skyblock.utils.GradesAChallengesUtils;
 import fr.eazyender.skyblock.world.SkyBlockGen;
-import net.minecraft.server.v1_14_R1.WorldType;
-
-
+import net.minecraft.server.v1_14_R1.ChatComponentText;
+import net.minecraft.server.v1_14_R1.PacketPlayOutPlayerListHeaderFooter;
 
 public class SkyblockMain extends JavaPlugin 
 {
@@ -62,6 +73,8 @@ public class SkyblockMain extends JavaPlugin
 	  public World world;
 	  
 	  private static SkyblockMain skyblock;
+	  
+	  private boolean tc = false;
 	
 	@Override
 	public void onEnable() 
@@ -101,21 +114,31 @@ public class SkyblockMain extends JavaPlugin
 		getCommand("customgive").setExecutor(new CommandCustomGive());
 		/* Commande pour se give les grades */
 		getCommand("grades").setExecutor(new CommandGrades());
+		/* Commande pour se give les grades */
+		getCommand("challenges").setExecutor(new CommandChallenges());
 		
 		getCommand("invite").setExecutor(new CommandTempoInvite());
 		
 		PluginManager pm = getServer().getPluginManager();
 		
-		/* Les events : */
+		/* Les GUI : */
+		pm.registerEvents(new GuiCustomFurnace(), this);
 		pm.registerEvents(new GuiBiome(), this);	
 		pm.registerEvents(new GuiIsland(), this);	
 		pm.registerEvents(new GuiMinions(), this);	
 		pm.registerEvents(new GuiShop(), this);
 		pm.registerEvents(new GuiTrade(), this);
+		pm.registerEvents(new GuiChallengesMain(), this);
 		pm.registerEvents(new GuiCustomCrafting(), this);
 		pm.registerEvents(new MainEventsHandler(), this);
 		pm.registerEvents(new MainScoreboard(this), this);
 		makeWorld();
+		
+		loopTabList();
+		
+		/* Les structures : */
+		pm.registerEvents(new ElementAltar(), this);
+		pm.registerEvents(new CustomFurnace(), this);
 		
 		IslandManager im = new IslandManager();
 		PlayerEconomy pe = new PlayerEconomy();
@@ -127,7 +150,6 @@ public class SkyblockMain extends JavaPlugin
 		getCommand("level").setExecutor(new CommandLevel());
 		/* Commande permettant d'accéder à tt les options de son île */
 		getCommand("island").setExecutor(new CommandIsland());
-	     //registerPermissions();
 	      registerListeners();
 	      registerPermissions();
 	      PlayerActionBar.initBar();
@@ -148,13 +170,14 @@ public class SkyblockMain extends JavaPlugin
 		 
 	}
 	
-	 private void registerPermissions() {
-		    PluginManager pm = Bukkit.getPluginManager();
-		    Permission p = new Permission("skyblock.player");
-		    p.setDefault(PermissionDefault.TRUE);
-		    pm.addPermission(p);
-		  }
-	  
+	
+	private void registerPermissions() {
+	    PluginManager pm = Bukkit.getPluginManager();
+	    Permission p = new Permission("skyblock.player");
+	    p.setDefault(PermissionDefault.TRUE);
+	    pm.addPermission(p);
+	  }
+
 	  private void registerListeners() {
 	    PluginManager pm = Bukkit.getPluginManager();
 	    pm.registerEvents(new EntityInteract(), this);
@@ -165,6 +188,8 @@ public class SkyblockMain extends JavaPlugin
 	    pm.registerEvents(new PlayerInteract(), this);
 	    pm.registerEvents(new PlayerPerformCommand(), this);
 	    pm.registerEvents(new PlayerBreakBlock(), this);
+	    
+	    pm.registerEvents(new BlockPlacedNaturaly(), this);
 	    
 	    pm.registerEvents(new GemFire(), this);
 	  }
@@ -182,6 +207,61 @@ public class SkyblockMain extends JavaPlugin
 	    this.world.setDifficulty(Difficulty.NORMAL);
 	  }
 	
+	private void loopTabList()
+	{
+		
+		PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
+		new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				try {
+					Field a = packet.getClass().getDeclaredField("header");
+					a.setAccessible(true);
+					Field b = packet.getClass().getDeclaredField("footer");
+					b.setAccessible(true);
+					
+					
+					if(Bukkit.getOnlinePlayers().size() == 0) return;
+					for(Player ps : Bukkit.getOnlinePlayers()) {
+					Object header1 = new ChatComponentText("§e§lSkyeim \n§eSkyblock RPG\n§6-------------------"); 
+					Object header2 = new ChatComponentText("§6§lSkyeim \n§eSkyblock RPG\n§6-------------------");
+					String island = "";
+					if(IslandManager.getIslandManager().hasIsland(ps)) {
+						island = "" + IslandManager.getIslandManager().getIsland(ps).getLevel();
+					}else {
+						island = "Pas d'île";
+					}
+					Object footer = new ChatComponentText("§r§6-------------------\n"
+							+ "§r§6§lVos Informations\n"
+							+ "§eArgent : §6" + PlayerEconomy.getPlayerEconomy().getMoney(ps) + "\n"
+							+ "§eLevel île : §6" + island + "\n"
+							+ "§r§6-------------------\n"
+							+ "§r§eJoueurs en ligne : §6 " + Bukkit.getServer().getOnlinePlayers().size()
+							+ "\n§r§eVersion : §6Alpha 2.0"
+							+ "\n§r§e§oDev by §6§oEazy_Ender");
+					if(tc) {
+						a.set(packet, header1);
+						tc = false;
+					}else {
+						a.set(packet, header2);
+						tc = true;
+					}
+					b.set(packet, footer);
+					
+						((CraftPlayer) ps).getHandle().playerConnection.sendPacket(packet);
+					}
+					
+				}catch(NoSuchFieldException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+				
+			}
+					
+			
+		}.runTaskTimer(this, 0, 20);
+		
+	}
 	public static SkyblockMain getSkyBlock() { return skyblock; }
 
 

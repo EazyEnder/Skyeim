@@ -21,7 +21,7 @@ import fr.eazyender.skyblock.player.PlayerEconomy;
 
 public class GuiIsland implements Listener{
 	
-	public static int price_basique_t = 2500;
+	public static int price_basique_t = 500;
 	
 	public static void createGui(Player player) {
 		

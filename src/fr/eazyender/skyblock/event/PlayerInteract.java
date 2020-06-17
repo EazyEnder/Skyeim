@@ -35,7 +35,7 @@ public class PlayerInteract  implements Listener
 		  		}
 		  	}
 
-		  if(!p.isOp()) {
+		  if(!p.isOp() && !e.getClickedBlock().getType().equals(Material.DEAD_BRAIN_CORAL_BLOCK)) {
 		    if (p.getWorld().equals((SkyblockMain.getSkyBlock()).world)) {
 		    	 Island i;
 		    	if(IslandManager.getIslandManager().hasIsland(p)) {

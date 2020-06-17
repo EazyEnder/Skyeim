@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -12,6 +14,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import fr.eazyender.skyblock.player.PlayerActionBar;
 
 public class GemFire implements Listener{
 
@@ -52,6 +56,7 @@ public class GemFire implements Listener{
 							
 							ItemStack sword_fire = createCustomItem("§e§lEpee en §6§lAstate§r§4§o Feu","Arme","§f§lGemme :§r§4Feu",Material.DIAMOND_SWORD,1);
 							
+							cancelEffect(event.getPlayer(),1);
 							sword_empty.setDurability(event.getItem().getDurability());
 							event.getPlayer().getInventory().setItemInMainHand(sword_empty);
 							event.getPlayer().getInventory().setItemInOffHand(gem_fire);
@@ -60,18 +65,43 @@ public class GemFire implements Listener{
 				else{
 					if(event.getItem().getItemMeta().getDisplayName().equals(sword_fire.getItemMeta().getDisplayName())) {
 						
-						
+						if(!PlayerActionBar.getPlayer_manaStr().containsKey(event.getPlayer())) {
+							PlayerActionBar.getPlayer_manaStr().put(event.getPlayer(), PlayerActionBar.defaultmessage);
+						}
+						if(PlayerActionBar.getPlayer_manaStr().get(event.getPlayer()).equals(PlayerActionBar.defaultmessage)) {
 						ItemStack sword_fire = createCustomItem("§e§lEpee en §6§lAstate§r§4§o Feu","Arme","§f§lGemme :§r§4Feu",Material.DIAMOND_SWORD,1);
 						
-						System.out.println("test");
 						ItemMeta im = sword_fire.getItemMeta();
-						im.addEnchant(Enchantment.DAMAGE_ALL, 10, false);
+						im.addEnchant(Enchantment.DAMAGE_ALL, 5, true);
 						sword_fire.setItemMeta(im);
 						sword_fire.setDurability(event.getItem().getDurability());
 						event.getPlayer().getInventory().setItemInMainHand(sword_fire);
+						event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_BLAZE_SHOOT, 1, 1);
+						PlayerActionBar.setOnOrOff(event.getPlayer(),true);
+						}
 					}
 				}
 			}
+		}
+		
+	}
+	
+	public static void cancelEffect(Player player,int stape) {
+		
+		if(stape == 1) {
+		ItemStack sword_fire_without = createCustomItem("§e§lEpee en §6§lAstate§r§4§o Feu","Arme","§f§lGemme :§r§4Feu",Material.DIAMOND_SWORD,1);
+		
+		ItemMeta im = sword_fire_without.getItemMeta();
+		im.removeEnchant(Enchantment.DAMAGE_ALL);
+		sword_fire_without.setItemMeta(im);
+		if(player.getItemInHand().getItemMeta().getDisplayName() == "§e§lEpee en §6§lAstate§r§4§o Feu")
+		{sword_fire_without.setDurability(player.getItemInHand().getDurability());
+		player.getInventory().setItemInMainHand(sword_fire_without);
+		player.playSound(player.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 1, 1);}
+		}
+		else if(stape == 2){
+		PlayerActionBar.setOnOrOff(player,false);
+		player.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 1, 1);
 		}
 		
 	}

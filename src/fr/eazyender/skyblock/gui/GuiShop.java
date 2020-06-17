@@ -21,16 +21,16 @@ import fr.eazyender.skyblock.player.PlayerEconomy;
 public class GuiShop implements Listener{
 	
 	static int[][] prices = {{400,300,150,75,50,50,25,10   ,250,200,100,50,60,35,35,20}
-	,{5,10,15,15,15,15,15,30,50,75,50,150,100,25,50}
+	,{5,10,15,15,15,15,15,30,50,75,50,150,100,25,20}
 	,{10,15,15,20,30,30,10,40,20,5,7,10,10,10,15,15,15,20,10,10,10,10,200}
-	,{40,40,75,75,50,50,50,50,50,75,50,50,75,75,100,700,150,20}
+	,{40,40,75,75,50,50,50,50,50,75,50,50,75,75,100,700,150,50,30}
 	,{15,20,20,20,30,100,150,20,10000}};
 	static Material[][] itemSell = {{Material.NETHER_QUARTZ_ORE,Material.EMERALD_ORE,Material.DIAMOND_ORE,Material.REDSTONE_ORE,Material.GOLD_ORE,Material.LAPIS_ORE,Material.IRON_ORE,Material.COAL_ORE,
 									Material.QUARTZ,Material.EMERALD,Material.DIAMOND,Material.REDSTONE,Material.GOLD_INGOT,Material.LAPIS_LAZULI,Material.IRON_INGOT,Material.COAL}
 									,{Material.COBBLESTONE,Material.STONE,Material.GRAVEL,Material.ANDESITE,Material.DIORITE,Material.GRANITE,Material.CLAY,Material.SAND,Material.DIRT,Material.GRASS_BLOCK,Material.NETHERRACK,Material.SOUL_SAND,Material.GLOWSTONE,Material.PRISMARINE,Material.SEA_LANTERN}
 									,{Material.OAK_SAPLING,Material.BIRCH_SAPLING,Material.SPRUCE_SAPLING,Material.ACACIA_SAPLING,Material.DARK_OAK_SAPLING,Material.JUNGLE_SAPLING,Material.OAK_LOG,Material.LAVA_BUCKET,Material.WATER_BUCKET,Material.LILY_PAD
 										,Material.WHEAT_SEEDS,Material.PUMPKIN_SEEDS,Material.MELON_SEEDS,Material.POTATO,Material.CARROT,Material.BEETROOT_SEEDS,Material.SWEET_BERRIES,Material.SUGAR_CANE,Material.VINE,Material.BAMBOO,Material.CACTUS,Material.NETHER_WART}
-									,{Material.PIG_SPAWN_EGG,Material.RABBIT_SPAWN_EGG,Material.COW_SPAWN_EGG,Material.CHICKEN_SPAWN_EGG,Material.COD_SPAWN_EGG,Material.TROPICAL_FISH_SPAWN_EGG,Material.SALMON_SPAWN_EGG,Material.CAT_SPAWN_EGG,Material.SQUID_SPAWN_EGG,Material.HORSE_SPAWN_EGG,Material.LLAMA_SPAWN_EGG,Material.TURTLE_EGG,Material.PUFFERFISH_SPAWN_EGG,Material.SHEEP_SPAWN_EGG,Material.MOOSHROOM_SPAWN_EGG,Material.VILLAGER_SPAWN_EGG,Material.ZOMBIE_SPAWN_EGG,Material.NAME_TAG}
+									,{Material.PIG_SPAWN_EGG,Material.RABBIT_SPAWN_EGG,Material.COW_SPAWN_EGG,Material.CHICKEN_SPAWN_EGG,Material.COD_SPAWN_EGG,Material.TROPICAL_FISH_SPAWN_EGG,Material.SALMON_SPAWN_EGG,Material.CAT_SPAWN_EGG,Material.SQUID_SPAWN_EGG,Material.HORSE_SPAWN_EGG,Material.LLAMA_SPAWN_EGG,Material.TURTLE_EGG,Material.PUFFERFISH_SPAWN_EGG,Material.SHEEP_SPAWN_EGG,Material.MOOSHROOM_SPAWN_EGG,Material.VILLAGER_SPAWN_EGG,Material.ZOMBIE_SPAWN_EGG,Material.FOX_SPAWN_EGG,Material.NAME_TAG}
 									,{Material.ROTTEN_FLESH,Material.STRING,Material.GUNPOWDER,Material.BONE,Material.SLIME_BALL,Material.BLAZE_ROD,Material.GHAST_TEAR,Material.SPIDER_EYE,Material.NETHER_STAR}};
 	
 	private static double coefsell = 5;

@@ -52,6 +52,31 @@ public class CommandCustomGive implements CommandExecutor {
 			        p.getInventory().addItem((createCustomItem("§e§lCasque en §6§lAstate","Armure",null,Material.DIAMOND_HELMET,1)));
 					
 					break;
+				case "rubis_helmet":
+			        
+			        p.getInventory().addItem((createCustomItem("§8§lCasque en §c§lRubis","Armure",null,Material.DIAMOND_HELMET,1)));
+					
+					break;
+				case "rubis_chestplate":
+			        
+			        p.getInventory().addItem((createCustomItem("§8§lPlastron en §c§lRubis","Armure",null,Material.DIAMOND_CHESTPLATE,1)));
+					
+					break;
+				case "rubis_leggings":
+    
+					p.getInventory().addItem((createCustomItem("§8§lJambiere en §c§lRubis","Armure",null,Material.DIAMOND_LEGGINGS,1)));
+	
+					break;
+				case "rubis_boots":
+    
+					p.getInventory().addItem((createCustomItem("§8§lBottes en §c§lRubis","Armure",null,Material.DIAMOND_BOOTS,1)));
+	
+					break;
+				case "rubis_sword":
+    
+					p.getInventory().addItem((createCustomItem("§8§lEpee en §c§lRubis","Armure",null,Material.DIAMOND_SWORD,1)));
+	
+					break;
 				case "astate_leggings":
 			        
 			        p.getInventory().addItem((createCustomItem("§e§lJambiere en §6§lAstate","Armure",null,Material.DIAMOND_LEGGINGS,1)));

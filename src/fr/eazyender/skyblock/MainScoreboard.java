@@ -139,7 +139,7 @@ public class MainScoreboard implements Listener {
 		name_player_grade = "§e§lGrade: §r§f";
 		player_grade = obj.getScore("§e§lGrade: §r§f");
 		player_grade.setScore(6);
-		name_moneyS = "§e§lArgent: §r§f" + PlayerEconomy.getPlayerEconomy().getMoney(ps);;
+		name_moneyS = "§e§lArgent: §r§f" + PlayerEconomy.getPlayerEconomy().getMoney(ps);
 		moneyS = obj.getScore("§e§lArgent: §r§f" + moneyS);
 		moneyS.setScore(5);
 		
@@ -153,7 +153,7 @@ public class MainScoreboard implements Listener {
 		island_width.setScore(2);
 		}
 		if(IslandManager.getIslandManager().hasIsland(ps)) {
-		name_island_lvl = "§e§lLevel: §r§f" + IslandManager.getIslandManager().getIsland(ps).getLevel();;
+		name_island_lvl = "§e§lLevel: §r§f" + IslandManager.getIslandManager().getIsland(ps).getLevel();
 		island_lvl = obj.getScore(name_island_lvl);
 		island_lvl.setScore(1);
 		}else {
